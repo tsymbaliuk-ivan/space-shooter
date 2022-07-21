@@ -231,15 +231,15 @@ def check_play_button(ai_settings, screen, stats, play_button, ship, aliens, bul
         # Сброс игровой статистики.
         stats.reset_stats()
         stats.game_active = True
-    # Указатель мыши скрывается.
-    pygame.mouse.set_visible(False)
-    # Очистка списков пришельцев и пуль.
-    aliens.empty()
-    bullets.empty()
+        # Указатель мыши скрывается.
+        pygame.mouse.set_visible(False)
+        # Очистка списков пришельцев и пуль.
+        aliens.empty()
+        bullets.empty()
 
-    # Создание нового флота и размещение корабля в центре.
-    create_fleet(ai_settings, screen, ship, aliens)
-    ship.center_ship()
+        # Создание нового флота и размещение корабля в центре.
+        create_fleet(ai_settings, screen, ship, aliens)
+        ship.center_ship()
 
 
 def get_number_stars_x(ai_settings, star_width):
