@@ -1,10 +1,11 @@
 import sys
-
 import pygame
 
 from bullet import Bullet
 from alien import Alien
 from time import sleep
+from star import Star
+from random import randint
 
 def check_keydown_event(event, ai_settings, screen, ship, bullets):
     """Respond to keypresses."""
@@ -43,14 +44,13 @@ def check_events(ai_settings, screen, stats, play_button, ship, aliens, bullets)
             check_keyup_event(event, ship)
 
 
-
-
-
-def update_screen(ai_settings, screen,stats, ship, bullets, aliens, play_button):
+def update_screen(ai_settings, screen, stats, ship, bullets, aliens, play_button, stars):
     """Update images on the screen and flip to the new screen."""
 
     # Redraw the screen during each pass through the loop.
     screen.fill(ai_settings.bg_color)
+
+    stars.draw(screen)
 
     # Draw our ship
     ship.blitme()
@@ -77,7 +77,8 @@ def update_bullets(ai_settings, screen, ship, aliens, bullets):
     for bullet in bullets.copy():
         if bullet.rect.bottom <= 0:
             bullets.remove(bullet)
-    check_bullet_alien_collicions(ai_settings,screen, ship, bullets, aliens)
+    check_bullet_alien_collicions(ai_settings, screen, ship, bullets, aliens)
+
 
 def check_bullet_alien_collicions(ai_settings, screen, ship, bullets, aliens):
     """Respond to bullet-alien collisions."""
@@ -144,7 +145,6 @@ def create_fleet(ai_settings, screen, ship, aliens):
                          row_number)
 
 
-
 def check_fleet_edges(ai_settings, aliens):
     """Реагирует на достижение пришельцем края экрана."""
     for alien in aliens.sprites():
@@ -197,7 +197,8 @@ def ship_hit(ai_settings, stats, screen, ship, aliens, bullets):
         stats.game_active = False
         pygame.mouse.set_visible(True)
 
-def update_aliens(ai_settings, stats, screen,  ship, aliens, bullets):
+
+def update_aliens(ai_settings, stats, screen, ship, aliens, bullets):
     """
     Проверяет, достиг ли флот края экрана,
     после чего обновляет позиции всех пришельцев во флоте.
@@ -208,7 +209,8 @@ def update_aliens(ai_settings, stats, screen,  ship, aliens, bullets):
                         bullets)
     # Проверка коллизий "пришелец-корабль".
     if pygame.sprite.spritecollideany(ship, aliens):
-        ship_hit(ai_settings,stats, screen, ship, aliens, bullets)
+        ship_hit(ai_settings, stats, screen, ship, aliens, bullets)
+
 
 def check_aliens_bottom(ai_settings, stats, screen, ship, aliens, bullets):
     """Проверяет, добрались ли пришельцы до нижнего края экрана."""
@@ -218,6 +220,7 @@ def check_aliens_bottom(ai_settings, stats, screen, ship, aliens, bullets):
         if alien.rect.bottom >= screen_rect.bottom:
             # Происходит то же, что при столкновении с кораблем.
             ship_hit(ai_settings, stats, screen, ship, aliens, bullets)
+
 
 def check_play_button(ai_settings, screen, stats, play_button, ship, aliens, bullets, mouse_x, mouse_y):
     """Запускает новую игру при нажатии кнопки Play."""
@@ -237,3 +240,55 @@ def check_play_button(ai_settings, screen, stats, play_button, ship, aliens, bul
     # Создание нового флота и размещение корабля в центре.
     create_fleet(ai_settings, screen, ship, aliens)
     ship.center_ship()
+
+
+def get_number_stars_x(ai_settings, star_width):
+    """Вычисляет количество звезд в ряду."""
+    available_space_x = ai_settings.screen_width  # - 2 * star_width
+    number_stars_x = int((available_space_x / (4 * star_width)))
+
+    return number_stars_x
+
+
+def get_number_rows_for_star(ai_settings, star_height):
+    """Определяет количество рядов, помещающихся на экране."""
+
+    available_space_y = (ai_settings.screen_height - 2 * star_height)
+    number_rows = int(available_space_y / (2 * star_height))
+
+    return number_rows
+
+
+def create_star(ai_settings, screen, stars, star_number):  # , row_number):
+    """Создает пришельца и размещает его в ряду."""
+    star = Star(ai_settings, screen)
+    star_width = star.rect.width
+    star.x = star_width + 5 * star_number * star_width
+    star.y = randint(-500, 500)
+    star.rect.x = star.x
+
+    star.rect.y = star.rect.height + 5 * star.rect.height  # * row_number
+    # Randomize the positions of the stars.
+    #  This effect looks much better with a tiny star. If you're curious,
+    #  you might want to play around with the spacing a little.
+    star.rect.x += randint(-50, 50)
+    star.rect.y += randint(-20, 20)
+
+    stars.add(star)
+
+
+def create_stars(ai_settings, screen, stars):
+    """Create a full fleet of aliens."""
+    star = Star(ai_settings, screen)
+    number_stars_x = get_number_stars_x(ai_settings, star.rect.width)
+    for star_number in range(number_stars_x):
+        # Создание star и размещение его в ряду.
+        create_star(ai_settings, screen, stars, star_number)  # ,row_number)
+
+
+def update_stars(stars, ai_settings):
+    stars.update()
+    # Удаление star, вышедших за край экрана.
+    for star in stars.copy():
+        if star.rect.bottom >= ai_settings.screen_width:
+            stars.remove(star)

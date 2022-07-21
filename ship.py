@@ -8,8 +8,9 @@ class Ship:
         self.screen = screen
         self.ai_settings = ai_settings
         # Load the ship image and get its rect.
-        self.image = pygame.image.load('images/ship.bmp')
-        self.image.set_colorkey((230, 230, 230))
+        self.image = pygame.image.load('images/ship2.bmp')
+        self.image.set_colorkey((255, 255, 255))
+        # self.image = pygame.transform.scale(self.image, (70,90))
         self.rect = self.image.get_rect()
         #  сохраняем прямоугольник экрана
         self.screen_rect = screen.get_rect()

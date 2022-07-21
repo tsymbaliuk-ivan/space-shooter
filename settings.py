@@ -6,20 +6,22 @@ class Settings:
         # Screen settings.
         self.screen_width = 800
         self.screen_height = 600
-        self.bg_color = (230, 230, 230)
+        self.bg_color = (230, 230, 230) #(40, 40, 40) #(230, 230, 230)
         self.ship_speed_factor = 0.3
         self.ship_limit = 3
+        self.star_speed_factor = 0.1
 
         # Bullet settings.
         self.bullet_speed_factor = 0.5
         self.bullet_width = 3
         self.bullet_height = 15
-        self.bullet_color = 60, 60, 60
+        self.bullet_color = 247, 145, 13
         self.bullets_allowed = 3
 
         # Alien
         self.alien_speed_factor = 0.001
         self.fleet_drop_speed = 10
+
         # fleet_direction = 1 обозначает движение вправо; а -1 - влево.
         self.fleet_direction = 1
 
@@ -39,6 +41,6 @@ class Settings:
 
     def increase_speed(self):
         """Увеличивает настройки скорости."""
-        self.ship_speed_factor *= self.speedup_scale
-        self.bullet_speed_factor *= self.speedup_scale
-        self.alien_speed_factor *= self.speedup_scale
+        self.ship_speed_factor += self.speedup_scale
+        self.bullet_speed_factor += self.speedup_scale
+        self.alien_speed_factor += self.speedup_scale
