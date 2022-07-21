@@ -32,10 +32,12 @@ class Settings:
 
         # Темп ускорения игры
         # self.speedup_scale = 1
+        self.alien_points = 1
+        self.score_scale = 1.5
         # инициализирует значения атрибутов, которые
         # должны изменяться в ходе игры
         # self.initialize_dynamic_settings()
-        self.alien_points = 1
+
     def initialize_dynamic_settings(self):
         """Инициализирует настройки, изменяющиеся в ходе игры."""
         # self.ship_speed_factor = 1.5
@@ -49,3 +51,4 @@ class Settings:
     #     self.ship_speed_factor *= self.speedup_scale
     #     self.bullet_speed_factor *= self.speedup_scale
     #     self.alien_speed_factor *= self.speedup_scale
+    #     self.alien_points = int(self.alien_points * self.score_scale)
