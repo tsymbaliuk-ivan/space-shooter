@@ -35,13 +35,14 @@ class Settings:
         # инициализирует значения атрибутов, которые
         # должны изменяться в ходе игры
         # self.initialize_dynamic_settings()
+        self.alien_points = 1
+    def initialize_dynamic_settings(self):
+        """Инициализирует настройки, изменяющиеся в ходе игры."""
+        # self.ship_speed_factor = 1.5
+        # self.bullet_speed_factor = 3
+        # self.alien_speed_factor = 1
+        # self.fleet_direction = 1
 
-    # def initialize_dynamic_settings(self):
-    #     """Инициализирует настройки, изменяющиеся в ходе игры."""
-    #     self.ship_speed_factor = 1.5
-    #     self.bullet_speed_factor = 3
-    #     self.alien_speed_factor = 1
-    #     self.fleet_direction = 1
 
     # def increase_speed(self):
     #     """Увеличивает настройки скорости."""

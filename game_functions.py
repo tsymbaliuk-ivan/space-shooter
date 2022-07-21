@@ -96,7 +96,7 @@ def update_screen(ai_settings, screen, stats, scoreboard_, ship, bullets, aliens
     # Отображение последнего прорисованного экрана.
     pygame.display.flip()
 
-def update_bullets(ai_settings, screen, ship, aliens, bullets):
+def update_bullets(ai_settings, screen, stats, scoreboard_,  ship, aliens, bullets):
     """Update position of bullets, and get rid of old bullets."""
     bullets.update()
     # Удаление пуль, вышедших за край экрана.
@@ -104,15 +104,18 @@ def update_bullets(ai_settings, screen, ship, aliens, bullets):
         if bullet.rect.bottom <= 0:
             bullets.remove(bullet)
 
-    check_bullet_alien_collicions(ai_settings, screen, ship, bullets, aliens)
+    check_bullet_alien_collicions(ai_settings, screen, stats, scoreboard_, ship, bullets, aliens)
 
-def check_bullet_alien_collicions(ai_settings, screen, ship, bullets, aliens):
+def check_bullet_alien_collicions(ai_settings, screen, stats, scoreboard_, ship, bullets, aliens):
     """Respond to bullet-alien collisions."""
     # Remove any bullets and aliens that have collided.
     # Проверка попаданий в пришельцев.
     # При обнаружении колизии удалим пулю и пришельца.
 
-    pygame.sprite.groupcollide(bullets, aliens, True, True)
+    collisions = pygame.sprite.groupcollide(bullets, aliens, True, True)
+    if collisions:
+        stats.score += ai_settings.alien_points
+        scoreboard_.prep_score()
 
     if len(aliens) == 0:
         # Destroy existing bullets and create new fleet.

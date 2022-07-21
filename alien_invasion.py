@@ -44,7 +44,7 @@ def run_game():
         if stats.game_active:
             ship.update()
             gf.update_stars(stars, ai_settings)
-            gf.update_bullets(ai_settings, screen, ship, aliens, bullets)
+            gf.update_bullets(ai_settings, screen, stats, scoreboard_, ship, aliens, bullets)
             gf.update_aliens(ai_settings, stats, screen, ship, aliens, bullets)
 
             if len(stars) <= 20:
