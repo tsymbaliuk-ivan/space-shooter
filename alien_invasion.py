@@ -19,16 +19,14 @@ def run_game():
     # Создание кнопки Play.
     play_button = Button(ai_settings, screen, "Play")
 
-    # Создание экземпляра для хранения игровой статистики.
+    # Create an instance to store game statistics, and a scoreboard.
     stats = GameStats(ai_settings)
 
     # Make a ship
     ship = Ship(ai_settings, screen)
 
-    # Make a group to stars
+    # Make a groups to store bullets, aliens, stars
     stars = Group()
-
-    # Make a group to store bullets in
     bullets = Group()
     aliens = Group()
 
@@ -39,23 +37,17 @@ def run_game():
     gf.create_stars(ai_settings, screen, stars)
 
     while True:
-
-        # проверяет ввод, полученный от игрока
         gf.check_events(ai_settings, screen, stats, play_button, ship, aliens, bullets)
+
         if stats.game_active:
-
-            gf.update_stars(stars, ai_settings)
-            if len(stars) <= 20:
-                gf.create_stars(ai_settings, screen, stars)
-
-            # Позиция корабля будет обновляться после проверки событий клавиатуры,
             ship.update()
-
-            # и всех выпущенных пуль
+            gf.update_stars(stars, ai_settings)
             gf.update_bullets(ai_settings, screen, ship, aliens, bullets)
             gf.update_aliens(ai_settings, stats, screen, ship, aliens, bullets)
 
-        # отрисовка
+            if len(stars) <= 20:
+                gf.create_stars(ai_settings, screen, stars)
+
         gf.update_screen(ai_settings, screen, stats, ship, bullets, aliens, play_button, stars)
 
 
