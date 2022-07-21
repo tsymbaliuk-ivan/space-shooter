@@ -74,7 +74,7 @@ def check_play_button(ai_settings, screen, stats, play_button, ship, aliens, bul
         create_fleet(ai_settings, screen, ship, aliens)
         ship.center_ship()
 
-def update_screen(ai_settings, screen, stats, ship, bullets, aliens, play_button, stars):
+def update_screen(ai_settings, screen, stats, scoreboard_, ship, bullets, aliens, play_button, stars):
     """Update images on the screen and flip to the new screen."""
 
     # Redraw the screen during each pass through the loop.
@@ -86,6 +86,8 @@ def update_screen(ai_settings, screen, stats, ship, bullets, aliens, play_button
     # Redraw all bullets behind ship and aliens.
     for bullet in bullets.sprites():
         bullet.draw_bullet()
+
+    scoreboard_.show_score()
 
     # Кнопка Play отображается в том случае, если игра неактивна.
     if not stats.game_active:
