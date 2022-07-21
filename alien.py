@@ -15,7 +15,6 @@ class Alien(Sprite):
         self.image = pygame.image.load('images/alien2.bmp')
         self.image.set_colorkey((255, 255, 255))
         self.rect = self.image.get_rect()
-
         #  сохраняем прямоугольник экрана
         self.screen_rect = screen.get_rect()
 
@@ -40,10 +39,10 @@ class Alien(Sprite):
         self.x += (self.ai_settings.alien_speed_factor * self.ai_settings.fleet_direction)
         self.rect.x = self.x
 
-
     def blitme(self):
         """Draw the ship at its current location."""
         #  выводитм изображение на экран
         # в позиции, заданной self.rect.
         self.screen.blit(self.image, self.rect)
+
 
