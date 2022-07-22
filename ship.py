@@ -1,16 +1,17 @@
 import pygame
+from pygame.sprite import Sprite
 
-
-class Ship:
+class Ship(Sprite):
 
     def __init__(self,ai_settings, screen):
         """Initialize the ship and set its starting position."""
+        super(Ship, self).__init__()
         self.screen = screen
         self.ai_settings = ai_settings
         # Load the ship image and get its rect.
         self.image = pygame.image.load('images/ship2.bmp')
         self.image.set_colorkey((255, 255, 255))
-        # self.image = pygame.transform.scale(self.image, (70,90))
+        self.image = pygame.transform.scale(self.image, (70,60))
         self.rect = self.image.get_rect()
         #  сохраняем прямоугольник экрана
         self.screen_rect = screen.get_rect()
