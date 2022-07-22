@@ -25,7 +25,7 @@ def check_keyup_event(event, ship):
     elif event.key == pygame.K_LEFT:
         ship.moving_left = False
 
-def check_events(ai_settings, screen, stats, play_button, ship, aliens, bullets):
+def check_events(ai_settings, screen, stats,scoreboard_, play_button, ship, aliens, bullets):
     """Respond to keypresses and mouse events."""
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -33,7 +33,7 @@ def check_events(ai_settings, screen, stats, play_button, ship, aliens, bullets)
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
             mouse_x, mouse_y = pygame.mouse.get_pos()
-            check_play_button(ai_settings, screen, stats, play_button, ship, aliens, bullets, mouse_x, mouse_y)
+            check_play_button(ai_settings, screen, stats,scoreboard_, play_button, ship, aliens, bullets, mouse_x, mouse_y)
 
         elif event.type == pygame.KEYDOWN:
             check_keydown_event(event, ai_settings, screen, ship, bullets)
@@ -50,7 +50,7 @@ def check_aliens_bottom(ai_settings, stats, screen, ship, aliens, bullets):
             # Происходит то же, что при столкновении с кораблем.
             ship_hit(ai_settings, stats, screen, ship, aliens, bullets)
 
-def check_play_button(ai_settings, screen, stats, play_button, ship, aliens, bullets, mouse_x, mouse_y):
+def check_play_button(ai_settings, screen, stats, scoreboard_, play_button, ship, aliens, bullets, mouse_x, mouse_y):
     """Запускает новую игру при нажатии кнопки Play."""
     button_clicked = play_button.rect.collidepoint(mouse_x, mouse_y)
     if button_clicked and not stats.game_active:
@@ -64,7 +64,10 @@ def check_play_button(ai_settings, screen, stats, play_button, ship, aliens, bul
         stats.reset_stats()
         stats.game_active = True
 
-
+        # Сброс изображений счетов и уровня.
+        scoreboard_.prep_score()
+        scoreboard_.prep_high_score()
+        scoreboard_.prep_level()
 
         # Очистка списков пришельцев и пуль.
         aliens.empty()
@@ -127,10 +130,13 @@ def check_bullet_alien_collicions(ai_settings, screen, stats, scoreboard_, ship,
             check_high_score(stats, scoreboard_)
 
     if len(aliens) == 0:
-        # Destroy existing bullets and create new fleet.
+        # Если весь флот уничтожен, начинается следующий уровень.
         bullets.empty()
         ai_settings.increase_speed()
-        # ai_settings.increase_speed()
+        # Увеличение уровня
+        ai_settings.increase_speed()
+        stats.level += 1
+        scoreboard_.prep_level()
         create_fleet(ai_settings, screen, ship, aliens)
 
 def fire_bullet(ai_settings, screen, ship, bullets):
