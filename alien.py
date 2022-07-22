@@ -14,6 +14,7 @@ class Alien(Sprite):
         # Load the ship image and get its rect.
         self.image = pygame.image.load('images/alien2.bmp')
         self.image.set_colorkey((255, 255, 255))
+        self.image = pygame.transform.scale(self.image, (30, 30))
         self.rect = self.image.get_rect()
         #  сохраняем прямоугольник экрана
         self.screen_rect = screen.get_rect()
