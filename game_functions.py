@@ -8,14 +8,14 @@ from random import randint
 
 
 # events
-def check_keydown_event(event, ai_settings, screen, ship, bullets, shot_sound):
+def check_keydown_event(event, ai_settings, screen, ship, bullets, sounds):
     """Respond to keypresses."""
     if event.key == pygame.K_RIGHT:
         ship.moving_right = True
     elif event.key == pygame.K_LEFT:
         ship.moving_left = True
     elif event.key == pygame.K_SPACE:
-        fire_bullet(ai_settings, screen, ship, bullets, shot_sound)
+        fire_bullet(ai_settings, screen, ship, bullets, sounds)
     elif event.key == pygame.K_q:
         sys.exit()
 
@@ -28,7 +28,7 @@ def check_keyup_event(event, ship):
         ship.moving_left = False
 
 
-def check_events(ai_settings, screen, stats, scoreboard_, play_button, ship, aliens, bullets, shot_sound):
+def check_events(ai_settings, screen, stats, scoreboard_, play_button, ship, aliens, bullets, sounds):
     """Respond to keypresses and mouse events."""
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -40,7 +40,7 @@ def check_events(ai_settings, screen, stats, scoreboard_, play_button, ship, ali
                               mouse_y)
 
         elif event.type == pygame.KEYDOWN:
-            check_keydown_event(event, ai_settings, screen, ship, bullets, shot_sound)
+            check_keydown_event(event, ai_settings, screen, ship, bullets, sounds)
 
         elif event.type == pygame.KEYUP:
             check_keyup_event(event, ship)
@@ -116,7 +116,7 @@ def update_screen(ai_settings, screen, stats, scoreboard_, ship, bullets, aliens
     pygame.display.flip()
 
 
-def update_bullets(ai_settings, screen, stats, scoreboard_, ship, aliens, bullets, explosion_sound):
+def update_bullets(ai_settings, screen, stats, scoreboard_, ship, aliens, bullets, sounds):
     """Update position of bullets, and get rid of old bullets."""
     bullets.update()
     # Удаление пуль, вышедших за край экрана.
@@ -124,10 +124,10 @@ def update_bullets(ai_settings, screen, stats, scoreboard_, ship, aliens, bullet
         if bullet.rect.bottom <= 0:
             bullets.remove(bullet)
 
-    check_bullet_alien_collicions(ai_settings, screen, stats, scoreboard_, ship, bullets, aliens, explosion_sound)
+    check_bullet_alien_collicions(ai_settings, screen, stats, scoreboard_, ship, bullets, aliens, sounds)
 
 
-def check_bullet_alien_collicions(ai_settings, screen, stats, scoreboard_, ship, bullets, aliens, explosion_sound):
+def check_bullet_alien_collicions(ai_settings, screen, stats, scoreboard_, ship, bullets, aliens, sounds):
     """Respond to bullet-alien collisions."""
     # Remove any bullets and aliens that have collided.
     # Проверка попаданий в пришельцев.
@@ -135,8 +135,8 @@ def check_bullet_alien_collicions(ai_settings, screen, stats, scoreboard_, ship,
 
     collisions = pygame.sprite.groupcollide(bullets, aliens, True, True)
     if collisions:
-        explosion_sound.play()
-
+        sounds.explosion_sound.play()
+        # explosion_sound.play()
         for aliens in collisions.values():
             stats.score += ai_settings.alien_points * len(aliens)
             scoreboard_.prep_score()
@@ -153,13 +153,14 @@ def check_bullet_alien_collicions(ai_settings, screen, stats, scoreboard_, ship,
         create_fleet(ai_settings, screen, ship, aliens)
 
 
-def fire_bullet(ai_settings, screen, ship, bullets,shot_sound):
+def fire_bullet(ai_settings, screen, ship, bullets, sounds):
     """Выпускает пулю, если максимум еще не достигнут."""
 
     if len(bullets) < ai_settings.bullets_allowed:
         new_bullet = Bullet(ai_settings, screen, ship)
         bullets.add(new_bullet)
-        shot_sound.play()
+        sounds.shot_sound.play()
+        # shot_sound.play()
 
 
 def get_number_aliens_x(ai_settings, alien_width):
@@ -298,8 +299,13 @@ def create_stars(ai_settings, screen, stars):
 
 
 def update_stars(stars, ai_settings):
+    """Del old stars"""
     stars.update()
     # Удаление star, вышедших за край экрана.
     for star in stars.copy():
         if star.rect.bottom >= ai_settings.screen_width:
             stars.remove(star)
+
+def create_sound_track(sounds):
+    """create main sound track"""
+    sounds.initialize_settings()
