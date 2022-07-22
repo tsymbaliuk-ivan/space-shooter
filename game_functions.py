@@ -55,7 +55,7 @@ def check_play_button(ai_settings, screen, stats, play_button, ship, aliens, bul
     button_clicked = play_button.rect.collidepoint(mouse_x, mouse_y)
     if button_clicked and not stats.game_active:
         # Сброс игровых настроек.
-        # ai_settings.initialize_dynamic_settings()
+        ai_settings.initialize_dynamic_settings()
 
         # Указатель мыши скрывается.
         pygame.mouse.set_visible(False)
@@ -121,6 +121,7 @@ def check_bullet_alien_collicions(ai_settings, screen, stats, scoreboard_, ship,
     if len(aliens) == 0:
         # Destroy existing bullets and create new fleet.
         bullets.empty()
+        ai_settings.increase_speed()
         # ai_settings.increase_speed()
         create_fleet(ai_settings, screen, ship, aliens)
 
