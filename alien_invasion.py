@@ -36,12 +36,9 @@ def run_game():
         gf.check_events(ai_settings, screen, stats, scoreboard_, play_button, ship, aliens, bullets, sounds)
         if stats.game_active:
             ship.update()
-            gf.update_stars(stars, ai_settings)
+            gf.update_stars(stars, ai_settings, screen)
             gf.update_bullets(ai_settings, screen, stats, scoreboard_, ship, aliens, bullets, sounds)
             gf.update_aliens(ai_settings, screen, stats, scoreboard_, ship, aliens, bullets)
-
-            if len(stars) <= 20:
-                gf.create_stars(ai_settings, screen, stars)
 
         gf.update_screen(ai_settings, screen, stats, scoreboard_, ship, bullets, aliens, play_button, stars)
 

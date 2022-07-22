@@ -7,6 +7,7 @@ class Sounds:
         """Initialize the sounds settings."""
         self.initialize_settings()
 
+
     def initialize_settings(self):
         """Initialize sounds"""
         self.main_sound = pygame.mixer.music.load("sounds/Wave_Saver_Humbot.mp3")

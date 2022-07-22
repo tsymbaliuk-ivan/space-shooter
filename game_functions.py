@@ -298,9 +298,11 @@ def create_stars(ai_settings, screen, stars):
         create_star(ai_settings, screen, stars, star_number)  # ,row_number)
 
 
-def update_stars(stars, ai_settings):
+def update_stars(stars, ai_settings, screen):
     """Del old stars"""
     stars.update()
+    if len(stars) <= 20:
+        create_stars(ai_settings, screen, stars)
     # Удаление star, вышедших за край экрана.
     for star in stars.copy():
         if star.rect.bottom >= ai_settings.screen_width:
