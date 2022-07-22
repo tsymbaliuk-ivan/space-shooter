@@ -74,6 +74,13 @@ def check_play_button(ai_settings, screen, stats, play_button, ship, aliens, bul
         create_fleet(ai_settings, screen, ship, aliens)
         ship.center_ship()
 
+def check_high_score(stats, scoreboard_ ):
+    """Проверяет, появился ли новый рекорд."""
+    if stats.score > stats.high_score:
+        stats.high_score = stats.score
+        scoreboard_.prep_high_score()
+
+
 def update_screen(ai_settings, screen, stats, scoreboard_, ship, bullets, aliens, play_button, stars):
     """Update images on the screen and flip to the new screen."""
 
@@ -117,6 +124,7 @@ def check_bullet_alien_collicions(ai_settings, screen, stats, scoreboard_, ship,
         for aliens in collisions.values():
             stats.score += ai_settings.alien_points * len(aliens)
             scoreboard_.prep_score()
+            check_high_score(stats, scoreboard_)
 
     if len(aliens) == 0:
         # Destroy existing bullets and create new fleet.
