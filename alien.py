@@ -45,5 +45,3 @@ class Alien(Sprite):
         #  выводитм изображение на экран
         # в позиции, заданной self.rect.
         self.screen.blit(self.image, self.rect)
-
-

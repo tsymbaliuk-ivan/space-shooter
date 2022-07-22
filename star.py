@@ -13,7 +13,7 @@ class Star(Sprite):
 
         # Load the star image and get its rect.
         self.image = pygame.image.load('images/star.png')
-        self.image = pygame.transform.scale(self.image, (10,10))
+        self.image = pygame.transform.scale(self.image, (10, 10))
         self.rect = self.image.get_rect()
 
         #  сохраняем прямоугольник экрана
@@ -38,5 +38,5 @@ class Star(Sprite):
 
     def update(self):
         """Move the star down the screen."""
-        self.y += self.star_speed_factor         # Update the decimal position of the bullet
-        self.rect.y = self.y                # Update the rect position.
+        self.y += self.star_speed_factor  # Update the decimal position of the bullet
+        self.rect.y = self.y  # Update the rect position.

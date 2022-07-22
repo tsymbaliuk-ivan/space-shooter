@@ -13,8 +13,6 @@ class Settings:
         self.ship_speed_factor = 0.5
         self.ship_limit = 3
 
-
-
         # Bullet settings.
         self.bullet_speed_factor = 0.5
         self.bullet_width = 3
@@ -25,7 +23,6 @@ class Settings:
         # Alien
         self.alien_speed_factor = 0.05
         self.fleet_drop_speed = 10
-
 
         # fleet_direction = 1 обозначает движение вправо; а -1 - влево.
         self.fleet_direction = 1
@@ -45,7 +42,6 @@ class Settings:
 
         # fleet_direction = 1 обозначает движение вправо; а -1 - влево.
         self.fleet_direction = 1
-
 
     def increase_speed(self):
         """Увеличивает настройки скорости и стоимость пришельцев."""
