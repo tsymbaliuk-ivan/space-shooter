@@ -101,6 +101,7 @@ def update_screen(ai_settings, screen, stats, scoreboard_, ship, bullets, aliens
     ship.blitme()
     aliens.draw(screen)
 
+
     # Redraw all bullets behind ship and aliens.
     for bullet in bullets.sprites():
         bullet.draw_bullet()
@@ -135,6 +136,7 @@ def check_bullet_alien_collicions(ai_settings, screen, stats, scoreboard_, ship,
     collisions = pygame.sprite.groupcollide(bullets, aliens, True, True)
     if collisions:
         explosion_sound.play()
+
         for aliens in collisions.values():
             stats.score += ai_settings.alien_points * len(aliens)
             scoreboard_.prep_score()

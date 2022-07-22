@@ -6,7 +6,7 @@ class Settings:
         # Screen settings.
         self.screen_width = 800
         self.screen_height = 600
-        self.bg_color = (230, 230, 230)
+        self.bg_color = (220, 220, 220)
         self.star_speed_factor = 0.1
 
         # ship settings.

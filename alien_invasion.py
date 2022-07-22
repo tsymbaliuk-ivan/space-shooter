@@ -34,7 +34,9 @@ def run_game():
     shot_sound.set_volume(0.25)
 
     explosion_sound = pygame.mixer.Sound("sounds/explosion.ogg")
-    explosion_sound.set_volume(0.15 )
+    explosion_sound.set_volume(0.15)
+
+
 
     while True:
 
@@ -45,6 +47,7 @@ def run_game():
             gf.update_stars(stars, ai_settings)
             gf.update_bullets(ai_settings, screen, stats, scoreboard_, ship, aliens, bullets, explosion_sound)
             gf.update_aliens(ai_settings, screen, stats, scoreboard_, ship, aliens, bullets)
+
 
             if len(stars) <= 20:
                 gf.create_stars(ai_settings, screen, stars)
