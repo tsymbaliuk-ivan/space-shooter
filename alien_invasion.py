@@ -34,7 +34,7 @@ def run_game():
     shot_sound.set_volume(0.25)
 
     explosion_sound = pygame.mixer.Sound("sounds/explosion.ogg")
-    explosion_sound.set_volume(0.15)
+    explosion_sound.set_volume(0.15 )
 
     while True:
 

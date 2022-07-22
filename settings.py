@@ -38,7 +38,7 @@ class Settings:
         """Инициализирует настройки, изменяющиеся в ходе игры."""
         self.ship_speed_factor = 0.2
         self.bullet_speed_factor = 0.3
-        self.alien_speed_factor = 0.1
+        self.alien_speed_factor = 2
 
         # fleet_direction = 1 обозначает движение вправо; а -1 - влево.
         self.fleet_direction = 1

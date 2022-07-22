@@ -247,7 +247,7 @@ def update_aliens(ai_settings, screen, stats, scoreboard_, ship, aliens, bullets
     check_aliens_bottom(ai_settings, screen, stats, scoreboard_, ship, aliens, bullets)
     # Проверка коллизий "пришелец-корабль".
     if pygame.sprite.spritecollideany(ship, aliens):
-        ship_hit(ai_settings, stats, screen, scoreboard_, ship, aliens, bullets)
+        ship_hit(ai_settings, screen, stats, scoreboard_, ship, aliens, bullets)
 
 
 # About stars
