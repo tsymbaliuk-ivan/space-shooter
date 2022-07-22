@@ -31,10 +31,10 @@ def run_game():
     pygame.mixer.music.play(-1)
 
     shot_sound = pygame.mixer.Sound("sounds/shot.ogg")
-    shot_sound.set_volume(0.25)
+    shot_sound.set_volume(0.5)
 
     explosion_sound = pygame.mixer.Sound("sounds/explosion.ogg")
-    explosion_sound.set_volume(0.15)
+    explosion_sound.set_volume(0.5)
 
 
 
