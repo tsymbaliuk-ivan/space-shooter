@@ -3,28 +3,38 @@ from pygame.sprite import Sprite
 
 
 class Explosion(Sprite):
-    """A class to represent explosion."""
-
-    def __init__(self, ai_settings, screen):
-        """Initialize the explosion and set its starting position."""
-        super().__init__()
-        self.screen = screen
-        self.ai_settings = ai_settings
-
-        # Load the ship image and get its rect.
-        self.image = pygame.image.load('images/burst.png')
-        self.image = pygame.transform.scale(self.image, (30, 30))
+    def __init__(self, center, size):
+        pygame.sprite.Sprite.__init__(self)
+        self.size = size
+        self.explosion_anim = dict()
+        self.explosion_anim['lg'] = []
+        self.explosion_anim['sm'] = []
+        for i in range(9):
+            self.filename = 'regularExplosion0{}.png'.format(i)
+            self.img = pygame.image.load('/'.join(('explosions', self.filename))).convert()
+            self.img.set_colorkey((0, 0, 0))
+            self.img_lg = pygame.transform.scale(self.img, (75, 75))
+            self.explosion_anim['lg'].append(self.img_lg)
+            self.img_sm = pygame.transform.scale(self.img, (32, 32))
+            self.explosion_anim['sm'].append(self.img_sm)
+        self.image = self.explosion_anim[self.size][0]
         self.rect = self.image.get_rect()
-        #  сохраняем прямоугольник экрана
-        self.screen_rect = screen.get_rect()
+        self.rect.center = center
+        self.frame = 0
+        self.last_update = pygame.time.get_ticks()
+        self.frame_rate = 50
+        self.now = pygame.time.get_ticks()
 
-        # Каждый новый взрыв появляется в левом верхнем углу экрана.
-        self.rect.x = self.rect.width
-        self.rect.y = self.rect.height
+    def update(self):
 
-        # Store a decimal value for the ship's center.
-        self.x = float(self.rect.x)
+        if self.now - self.last_update > self.frame_rate:
+            self.last_update = self.now
+            self.frame += 1
+            if self.frame == len(self.explosion_anim[self.size]):
+                self.kill()
+            else:
+                self.center = self.rect.center
+                self.image = self.explosion_anim[self.size][self.frame]
+                self.rect = self.image.get_rect()
+                self.rect.center = self.center
 
-    def blitme(self):
-        """Draw explosion at its current location."""
-        self.screen.blit(self.image, self.rect)

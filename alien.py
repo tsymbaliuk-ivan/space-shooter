@@ -40,8 +40,3 @@ class Alien(Sprite):
         self.x += (self.ai_settings.alien_speed_factor * self.ai_settings.fleet_direction)
         self.rect.x = self.x
 
-    def blitme(self):
-        """Draw the ship at its current location."""
-        #  выводитм изображение на экран
-        # в позиции, заданной self.rect.
-        self.screen.blit(self.image, self.rect)

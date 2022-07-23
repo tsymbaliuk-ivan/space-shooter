@@ -5,7 +5,7 @@ from alien import Alien
 from time import sleep
 from star import Star
 from random import randint
-
+from explosion import Explosion
 
 # events
 def check_keydown_event(event, ai_settings, screen, ship, bullets, sounds):
@@ -92,7 +92,7 @@ def check_high_score(stats, scoreboard_):
         scoreboard_.prep_high_score()
 
 
-def update_screen(ai_settings, screen, stats, scoreboard_, ship, bullets, aliens, play_button, stars):
+def update_screen(ai_settings, screen, stats, scoreboard_, ship, bullets, aliens, play_button, stars, explosion):
     """Update images on the screen and flip to the new screen."""
 
     # Redraw the screen during each pass through the loop.
@@ -100,6 +100,8 @@ def update_screen(ai_settings, screen, stats, scoreboard_, ship, bullets, aliens
     stars.draw(screen)
     ship.blitme()
     aliens.draw(screen)
+    explosion.draw(screen)
+
 
 
     # Redraw all bullets behind ship and aliens.
@@ -116,7 +118,7 @@ def update_screen(ai_settings, screen, stats, scoreboard_, ship, bullets, aliens
     pygame.display.flip()
 
 
-def update_bullets(ai_settings, screen, stats, scoreboard_, ship, aliens, bullets, sounds):
+def update_bullets(ai_settings, screen, stats, scoreboard_, ship, aliens, bullets, sounds, explosion):
     """Update position of bullets, and get rid of old bullets."""
     bullets.update()
     # Удаление пуль, вышедших за край экрана.
@@ -124,10 +126,10 @@ def update_bullets(ai_settings, screen, stats, scoreboard_, ship, aliens, bullet
         if bullet.rect.bottom <= 0:
             bullets.remove(bullet)
 
-    check_bullet_alien_collicions(ai_settings, screen, stats, scoreboard_, ship, bullets, aliens, sounds)
+    check_bullet_alien_collicions(ai_settings, screen, stats, scoreboard_, ship, bullets, aliens, sounds, explosion)
 
 
-def check_bullet_alien_collicions(ai_settings, screen, stats, scoreboard_, ship, bullets, aliens, sounds):
+def check_bullet_alien_collicions(ai_settings, screen, stats, scoreboard_, ship, bullets, aliens, sounds, explosion):
     """Respond to bullet-alien collisions."""
     # Remove any bullets and aliens that have collided.
     # Проверка попаданий в пришельцев.
@@ -135,8 +137,12 @@ def check_bullet_alien_collicions(ai_settings, screen, stats, scoreboard_, ship,
 
     collisions = pygame.sprite.groupcollide(bullets, aliens, True, True)
     if collisions:
+
+        create_explosions(explosion, aliens, bullets)
+
+
         sounds.explosion_sound.play()
-        # explosion_sound.play()
+
         for aliens in collisions.values():
             stats.score += ai_settings.alien_points * len(aliens)
             scoreboard_.prep_score()
@@ -311,3 +317,11 @@ def update_stars(stars, ai_settings, screen):
 def create_sound_track(sounds):
     """create main sound track"""
     sounds.initialize_settings()
+
+def create_explosions(explosion, aliens, bullets):
+    explosion.update()
+    hits = pygame.sprite.groupcollide(aliens, bullets, True, True)
+    for hit in hits:
+        expl = Explosion(hit.rect.center, 'lg')
+        explosion.add(expl)
+
