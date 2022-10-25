@@ -16,8 +16,11 @@
 
 ### Space - shoot
 ### Arrows keys (left - right) - move the ship left / right
+### press 'q' for exit
 
 ## Cloning the Repository
 ### $ git clone https://github.com/tsymbaliuk-ivan/pygame.git
 ## Running
 ### $ python alien_invasion.py
+### gameplay screen - >
+![image](images/game_play_screen.png)
