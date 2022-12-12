@@ -1,7 +1,7 @@
 # 👽 Alien Invasion
 
 ## Alien invasion is a popular arcade game with same name.
-## I created this game by following the "Python Crash Course, 2nd Edition: A Hands-On, Project-Based Introduction to Programming" book. The reason was to improve my python skills.
+## I created this game by following the book "Python Crash Course, 2nd Edition: A Hands-On, Project-Based Introduction to Programming".
 
 ## 🚀 Introduction
 
